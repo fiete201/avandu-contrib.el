@@ -1,0 +1,9 @@
+* avandu contrib
+  This is a mode extending avandu that offers great functionality to
+  access ttrss with some UI improvements.
+
+** [0/3] Features
+   - [ ] Move from one article to the next without going back to overview
+   - [ ] Display unread articles in a table
+   - [ ] Sort table by date or category
+   - [ ] Filter by category
