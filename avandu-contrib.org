@@ -2,8 +2,9 @@
   This is a mode extending avandu that offers great functionality to
   access ttrss with some UI improvements.
 
-** [0/3] Features
+** [0/4] Features
    - [ ] Move from one article to the next without going back to overview
    - [ ] Display unread articles in a table
+     - perhaps tabulated-list.el
    - [ ] Sort table by date or category
    - [ ] Filter by category
