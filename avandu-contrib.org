@@ -2,9 +2,13 @@
   This is a mode extending avandu that offers great functionality to
   access ttrss with some UI improvements.
 
-** [0/4] Features
+** [2/7] Features
    - [ ] Move from one article to the next without going back to overview
-   - [ ] Display unread articles in a table
+   - [X] Display unread articles in a table
      - perhaps tabulated-list.el
-   - [ ] Sort table by date or category
+   - [X] Sort table by date or category
    - [ ] Filter by category
+     - can be seen as partially implemented since we can sort by category
+   - [ ] Change Font so we can distinguish between read and unread articles
+   - [ ] refresh display when entering overview buffer
+   - [ ] add function to store all articles offline for reading in train

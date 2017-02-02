@@ -5,6 +5,9 @@
   (interactive)
   (message (concat "current line ID is: " (tabulated-list-get-id))))
 
+;;; Since the original avandu-view-article function runs an UI function 
+;;; that does not work with my ui I had to copy the whole function excluding
+;;; that call
 (defun avandu2-view-article (id)
   "Show a single article identified by ID in a new buffer."
   (interactive "nArticle id: ")
@@ -75,9 +78,9 @@ meaningless, but it's easy."
 		(unless (equal feed-id (assq 'feed_id elt))
 		  (add-to-list 'tabulated-list-entries
 			       (list (avu-prop elt id) (vector
-							(avu-prop elt feed_title)
 							(avu-prop elt title)
-							(number-to-string (avu-prop elt updated))
+							(avu-prop elt feed_title)
+							(format-time-string "%a %D %R" (avu-prop elt updated))
 							)))))
 	    result)
       (setq buffer-read-only t)
@@ -98,8 +101,8 @@ meaningless, but it's easy."
   "Major mode for ttrss displaying headlines in tabulated list.
 \\{avandu2-mode-map}"
   (use-local-map avandu2-overview-map)
-  (setq tabulated-list-format [("Kategorie" 40 t)
-			       ("Headline" 64 t)
+  (setq tabulated-list-format [("Headline" 64 t)
+			       ("Kategorie" 40 t)
 			       ("Updated" 40 t)])
   (setq tabulated-list-padding 2)
   (setq tabulated-list-sort-key (cons "Updated" t))
