@@ -22,7 +22,7 @@
                 (insert
                  (propertize (avu-prop item title)
                              'face 'avandu-article-title))
-                (newline)
+                (insert "\n")
                 (insert
                  (propertize (concat "by: " (avu-prop item author))
                              'face 'avandu-article-author))
@@ -33,11 +33,11 @@
                  'action #'(lambda (button)
                              (browse-url (button-get button 'url))))
                 (insert ")")
-                (newline)(newline)
+                (insert "\n")(insert "\n")
                 (setq content-start (point))
                 (insert (avu-prop item content))
                 (setq content-end (point))
-                (newline)(newline))
+                (insert "\n")(insert "\n"))
             data)
       (setq buffer-read-only t)
       (goto-char (point-min))
@@ -56,7 +56,7 @@
   "Get id of article in focused line and pass it to avandu-view-article"
   (avandu2-view-article (tabulated-list-get-id)))
 
-(defun avandu-table-overview ()
+(defun avandu2-table-overview ()
   "Request the headlines of unread articles and list them.
 
 The list is grouped and sorted by feed ID.  Sorting by feed ID is
