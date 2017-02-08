@@ -1,9 +1,25 @@
 ;;; avandu-extended.el extension of avandu
 ;;; this code adds a new mode for avandu ttrss reader
 (require 'avandu)
+(defvar article-id nil)
 (defun print-current-line-id ()
   (interactive)
   (message (concat "current line ID is: " (tabulated-list-get-id))))
+
+(defun avandu2-open-next-article-in-table ()
+  (interactive)
+  "find next article in overviews table and open it"
+  (let ((buffer (get-buffer-create "*avandu-table-overview*")))
+    (with-current-buffer buffer
+      ;;;(make-local-variable 'article-id)
+      (goto-char (point-min))
+      (while (not (equal (tabulated-list-get-id) article-id))
+      ;;;focus next line
+	(next-line))
+    ;;;focus next line
+      (next-line)
+    ;;;open article with that id
+      (avandu2-view-article (tabulated-list-get-id)))))
 
 ;;; Since the original avandu-view-article function runs an UI function 
 ;;; that does not work with my ui I had to copy the whole function excluding
@@ -11,6 +27,7 @@
 (defun avandu2-view-article (id)
   "Show a single article identified by ID in a new buffer."
   (interactive "nArticle id: ")
+  (setq article-id id)
   (let* ((data (avandu-get-article id))
          (buffer (get-buffer-create "*avandu-article*"))
          (inhibit-read-only t)
@@ -50,7 +67,6 @@
        (min content-end (point-max))))
     (goto-char (point-min))))
 
-
 (defun avandu2-open-article ()
   (interactive)
   "Get id of article in focused line and pass it to avandu-view-article"
@@ -63,7 +79,7 @@ The list is grouped and sorted by feed ID.  Sorting by feed ID is
 meaningless, but it's easy."
   (interactive)
   (avandu--check-login)
-  (let ((buffer (get-buffer-create "*avandu-overview*"))
+  (let ((buffer (get-buffer-create "*avandu-table-overview*"))
 	(result (sort (cl-coerce (avandu-headlines -4 :show-excerpt t
 						   :view-mode "unread")
 				 'list)
@@ -108,3 +124,6 @@ meaningless, but it's easy."
   (setq tabulated-list-sort-key (cons "Updated" t))
   (tabulated-list-init-header))
 
+
+(eval-after-load 'avandu
+  '(define-key avandu-article-mode-map "n" 'avandu2-open-next-article-in-table))
