@@ -8,7 +8,15 @@
 
 (defun avandu2-open-next-article-in-table ()
   (interactive)
-  "find next article in overviews table and open it"
+  (avandu2-open-relative-article-in-table "n"))
+
+(defun avandu2-open-previous-article-in-table ()
+  (interactive)
+  (avandu2-open-relative-article-in-table "p"))
+
+(defun avandu2-open-relative-article-in-table (direction)
+  (interactive)
+  "find next article in overviews table and open it if direction is 'n' else previous"
   (let ((buffer (get-buffer-create "*avandu-table-overview*")))
     (with-current-buffer buffer
       ;;;(make-local-variable 'article-id)
@@ -17,7 +25,7 @@
       ;;;focus next line
 	(next-line))
     ;;;focus next line
-      (next-line)
+      (if (equal direction "n") (next-line) (previous-line))
     ;;;open article with that id
       (avandu2-view-article (tabulated-list-get-id)))))
 
@@ -127,3 +135,5 @@ meaningless, but it's easy."
 
 (eval-after-load 'avandu
   '(define-key avandu-article-mode-map "n" 'avandu2-open-next-article-in-table))
+(eval-after-load 'avandu
+  '(define-key avandu-article-mode-map "p" 'avandu2-open-previous-article-in-table))
